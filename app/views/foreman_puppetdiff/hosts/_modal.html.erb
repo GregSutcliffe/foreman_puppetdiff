@@ -1,0 +1,3 @@
+<% text.strip.split("\n").each do |line| %>
+  <%= content_tag(:div, (line.empty? ? '&nbsp;' : colourise_line(line).html_safe), :class => 'content') %>
+<% end %>

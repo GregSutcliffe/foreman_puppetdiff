@@ -1,0 +1,50 @@
+<!-- insert_after 'div#host-show' -->
+<%# TODO this needs reworking with proper assets %>
+<%= javascript 'reports' %>
+<script>
+$(document).ready(function() {
+  $('a.puppetdiff_button').bind('click', function () {
+    load_diff(this);
+  });
+});
+
+function load_diff(item) {
+  $('#diff-modal').modal({show: true});
+  $("#diff-modal-editor")
+    .css("position","relative")
+    .css("padding-top","0")
+    .css("line-height","1.3")
+    .css("overflow","scroll")
+    .height('380')
+    .width('588')
+    .html('<div class="spinner spinner-xs"></div>');
+  $.ajax({
+    type:'get',
+    url: $(item).attr('data-url'),
+    success:function (result) {
+      $("#diff-modal-editor")
+        .html(result);
+    },
+    complete:function (result) {
+    }
+  });
+  }
+</script>
+<div id="diff-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><%= _("Environment Diff") %></h4>
+      </div>
+      <div  id="diff-modal-editor" class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _("Close") %></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- vim: set ft=eruby : -->
