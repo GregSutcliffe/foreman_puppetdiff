@@ -10,6 +10,8 @@ module ForemanPuppetdiff
         @to   = Environment.find_by_name(params[:env]).to_s
   
         text = get_diff_from_proxy.body
+
+	text = "Nothing to show - environments are identical!" if text.empty?
   
         render :partial => 'foreman_puppetdiff/hosts/modal',
   	     :locals => { :text => text }
